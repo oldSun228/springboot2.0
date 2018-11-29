@@ -14,23 +14,6 @@ spring:
       enabled: true
   messages:
     encoding: utf-8
-  #redis
-  # REDIS (RedisProperties)
-  # Redis数据库索引（默认为0）
-  redis:
-    #数据库索引
-    database: 0
-    host: 192.168.1.5
-    port: 6379
-    password:
-  datasource:
-    name: springboot
-    url: jdbc:oracle://192.168.1.4:1521/orcl
-    username: tydic01
-    password: tydic01
-    # 使用druid数据源
-    type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: oracle.jdbc.driver.OracleDriver
 mybatis:
   mapper-locations: classpath:mapping/*.xml
   type-aliases-package: com.tydic.ck.model
