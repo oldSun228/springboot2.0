@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -22,8 +20,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * Redis 配置类
@@ -32,8 +28,6 @@ import redis.clients.jedis.JedisPoolConfig;
  * @data 2018/11/29 9:15
  */
 @Configuration
-// 必须加，使配置生效
-@EnableCaching
 public class RedisConfiguration extends CachingConfigurerSupport {
 
     /**
@@ -124,42 +118,4 @@ public class RedisConfiguration extends CachingConfigurerSupport {
         };
         return cacheErrorHandler;
     }
-
-    @ConfigurationProperties
-    class DataJedisProperties{
-        @Value("${spring.redis.host}")
-        private  String host;
-        @Value("${spring.redis.password}")
-        private  String password;
-        @Value("${spring.redis.port}")
-        private  int port;
-        @Value("${spring.redis.timeout}")
-        private  int timeout;
-        @Value("${spring.redis.jedis.pool.max-idle}")
-        private int maxIdle;
-        @Value("${spring.redis.jedis.pool.max-wait}")
-        private long maxWaitMillis;
-
-        @Bean
-        JedisConnectionFactory jedisConnectionFactory() {
-            lg.info("Create JedisConnectionFactory successful");
-            JedisConnectionFactory factory = new JedisConnectionFactory();
-            factory.setHostName(host);
-            factory.setPort(port);
-            factory.setTimeout(timeout);
-            factory.setPassword(password);
-            return factory;
-        }
-        @Bean
-        public JedisPool redisPoolFactory() {
-            lg.info("JedisPool init successful，host -> [{}]；port -> [{}]", host, port);
-            JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-            jedisPoolConfig.setMaxIdle(maxIdle);
-            jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
-
-            JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, password);
-            return jedisPool;
-        }
-    }
-
 }
