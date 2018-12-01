@@ -26,8 +26,14 @@ public class RedisController {
     @RequestMapping(value = "/setStringValue", method = RequestMethod.POST)
     @ApiOperation(value = "出入String类型的数值", notes = "redis操作", httpMethod = "POST", response = Map.class)
     public void setStringValue() {
+        UsereEntity entity= new UsereEntity();
+        entity.setName("name");
+        entity.setSex("sex");
+        redisUtils.set("string1", entity);
+        UsereEntity entity1= (UsereEntity) redisUtils.get("string1");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + entity1.getName());
 //        redisUtils.set("string1", "测试中国");
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + redisUtils.get("string1"));
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + redisUtils.get("string1"));
 
 
 //        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
