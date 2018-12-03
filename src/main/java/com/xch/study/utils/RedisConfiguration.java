@@ -9,17 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.session.SessionRepository;
+import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 
 /**
  * Redis 配置类
@@ -37,7 +38,7 @@ public class RedisConfiguration extends CachingConfigurerSupport {
 
 
     @Autowired
-    private JedisConnectionFactory jedisConnectionFactory;
+    private RedisConnectionFactory redisConnectionFactory;
 
     @Bean
     @Override
@@ -66,12 +67,12 @@ public class RedisConfiguration extends CachingConfigurerSupport {
         lg.info("初始化 -> [{}]", "CacheManager RedisCacheManager Start");
         RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager
                 .RedisCacheManagerBuilder
-                .fromConnectionFactory(jedisConnectionFactory);
+                .fromConnectionFactory(redisConnectionFactory);
         return builder.build();
     }
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(JedisConnectionFactory jedisConnectionFactory) {
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         //设置序列化
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
         ObjectMapper om = new ObjectMapper();
@@ -79,8 +80,8 @@ public class RedisConfiguration extends CachingConfigurerSupport {
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(om);
         // 配置redisTemplate
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(jedisConnectionFactory);
+        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
         RedisSerializer stringSerializer = new StringRedisSerializer();
         redisTemplate.setKeySerializer(stringSerializer); // key序列化
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer); // value序列化
@@ -118,4 +119,21 @@ public class RedisConfiguration extends CachingConfigurerSupport {
         };
         return cacheErrorHandler;
     }
+
+
+    /**
+     * 设置spring session redis 序列化方式
+     *
+     * @param redisConnectionFactory
+     * @return
+     */
+    @Bean
+    public SessionRepository sessionRepository(RedisConnectionFactory redisConnectionFactory) {
+        RedisOperationsSessionRepository sessionRepository = new RedisOperationsSessionRepository(redisTemplate(redisConnectionFactory));
+        FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
+        sessionRepository.setDefaultSerializer(fastJsonRedisSerializer);
+        sessionRepository.setDefaultMaxInactiveInterval(36000);
+        return sessionRepository;
+    }
+
 }

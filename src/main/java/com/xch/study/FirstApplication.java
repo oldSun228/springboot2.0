@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication //配置启动类。
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement //如果mybatis中service实现类中加入事务注解，需要此处添加该注解;开启事务等同于xml配置方式的 <tx:annotation-driven />
 @ServletComponentScan//使用@ServletComponentScan 注解后，Servlet、Filter、Listener 可以直接通过 @WebServlet、@WebFilter、@WebListener 注解自动注册，无需其他代码。
 @EnableCaching//完成简单的缓存功能
+//@EnableRedisHttpSession//开启spring session支持
 public class FirstApplication {
 
     public static void main(String[] args) { /**
