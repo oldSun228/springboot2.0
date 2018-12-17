@@ -112,7 +112,6 @@ public class ElasticSearchCreateController {
     public String queryData(@RequestBody String id) {
         GetResponse getResponse = ESUtil.queryData(paramForConf.getIndex(), paramForConf.getType(), id);
         return getResponse.getSourceAsString();
-
     }
 
 
