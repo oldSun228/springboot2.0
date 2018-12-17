@@ -1,0 +1,6 @@
+elasticsearch:
+  clusterName: cluster_demo
+  ip: 192.168.1.6
+  port: 9300
+  index: index_demo
+  type: elasticsearch6_5_1_

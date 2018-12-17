@@ -21,16 +21,14 @@ public class ParamForConf {
      */
     private static final Logger lg = LoggerFactory.getLogger(ParamForConf.class);
 
-    @Value("${spring.redis.host}")
-    private String host;
-    @Value("${spring.redis.password}")
-    private String password;
-    @Value("${spring.redis.port}")
-    private int port;
-    @Value("${spring.redis.timeout}")
-    private int timeout;
-    @Value("${spring.redis.jedis.pool.max-idle}")
-    private int maxIdle;
-    @Value("${spring.redis.jedis.pool.max-wait}")
-    private long maxWaitMillis;
+    @Value("${elasticsearch.clusterName}")
+    private String clusterName;
+    @Value("${elasticsearch.ip}")
+    private String ip;
+    @Value("${elasticsearch.port}")
+    private Integer port;
+    @Value("${elasticsearch.index}")
+    private String index;
+    @Value("${elasticsearch.type}")
+    private String type;
 }

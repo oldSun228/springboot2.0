@@ -4,4 +4,4 @@ server:
     context-path: /study
 spring:
   profiles:
-    active: dev,redis,db
+    active: dev,redis,db,es
