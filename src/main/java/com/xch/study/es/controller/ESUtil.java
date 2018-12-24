@@ -5,19 +5,30 @@ import com.alibaba.fastjson.JSONObject;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.MatchAllQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.sort.SortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,7 +41,7 @@ public class ESUtil {
     //ES集群中某个节点
     private static final String TCP_IP = "192.168.1.6";
     //连接端口号
-    private static final int TCP_PORT = 9300;
+    private static final int TCP_PORT = 9301;
     //构建Settings对象
     //TransportClient对象，用于连接ES集群
     private static volatile TransportClient client;
@@ -156,10 +167,15 @@ public class ESUtil {
      * @return
      */
     public static void saveData(String index, String type, JSONObject jsonObject) {
-//        getClient().prepareIndex(index, type).setSource(jsonObject, XContentType.JSON);
-        IndexResponse response = getClient().prepareIndex(index, type).setSource(jsonObject).get();
-        System.out.println("map索引名称:" + response.getIndex() + "\n map类型:" + response.getType()
-                + "\n map文档ID:" + response.getId() + "\n当前实例map状态:" + response.status());
+        BulkRequestBuilder bulkRequest = client.prepareBulk();
+        bulkRequest.add(getClient().prepareIndex(index, type).setSource(jsonObject));
+        BulkResponse bulkResponse = bulkRequest.get();
+        if (bulkResponse.hasFailures()) {
+            System.out.println("failures..............:" + bulkResponse.buildFailureMessage());
+        }
+
+//        IndexResponse response = getClient().prepareIndex(index, type).setSource(jsonObject).get();
+//        System.out.println("map索引名称:" + response.getIndex() + "\n map类型:" + response.getType() + "\n map文档ID:" + response.getId() + "\n当前实例map状态:" + response.status());
     }
 
     /**
@@ -167,39 +183,23 @@ public class ESUtil {
      *
      * @param index
      * @param type
-     * @param jsonObject
+     * @param id
      * @return
      */
-    public static void updataData(String index, String type, JSONObject jsonObject) {
-//      Map<String, Object> map = new HashMap<String, Object>();
-//    map.put("name", "大妹" );
-//    map.put("age",20);
-//    map.put("sex", "女");
-//    map.put("address", "广东省广州市天河区上社");
-//    map.put("phone", "15521202233");
-//    map.put("height", "180");
-//    map.put("weight", "70");
-//    UpdateResponse updateResponse = client.prepareUpdate("species", "person", "AWNtYjiVjqSYg4HhYcQZ")
-//            .setDoc(map).get();
-//    System.out.println("updateResponse索引名称:" + updateResponse.getIndex() + "\n updateResponse类型:" + updateResponse.getType()
-//            + "\n updateResponse文档ID:" + updateResponse.getId() + "\n当前实例updateResponse状态:" + updateResponse.status());
+    public static UpdateResponse updataData(String index, String type, String id) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("createtime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis()));
+        map.put("username", "username999");
+        map.put("account", "account999");
+        map.put("sex", "sex999");
+        UpdateResponse updateResponse = getClient().prepareUpdate(index, type, id)
+                .setDoc(map).get();
+        return updateResponse;
     }
 
 
-    /**
-     * 根据id查询
-     */
-    public Map<String, Object> queryById(String id) {
-        GetResponse response = client.get(new GetRequest("logstash-2", "biglog", id)).actionGet();
-        if (!response.isSourceEmpty()) {
-            return response.getSource();
-        }
-        return null;
-    }
-
-
-    public static GetResponse queryData(String index, String type, String id) {
-        GetResponse getResponse = client.prepareGet(index, type, id).get();
+    public static GetResponse queryDataById(String index, String type, String id) {
+        GetResponse getResponse = getClient().prepareGet(index, type, id).get();
         System.out.println("索引库的数据:" + getResponse.getSourceAsString());
         return getResponse;
     }
@@ -207,5 +207,30 @@ public class ESUtil {
     public static DeleteResponse deleteData(String index, String type, String id) {
         DeleteResponse deleteResponse = getClient().prepareDelete(index, type, id).get();
         return deleteResponse;
+    }
+
+    public static SearchResponse queryData(String index, String type) {
+        QueryBuilder qb = new MatchAllQueryBuilder();
+        SearchResponse response = getClient().prepareSearch(index).setTypes(type).setQuery(qb).setFrom(0).setSize(10).get();
+        return response;
+    }
+
+    public static SearchRequestBuilder queryDataForCondition(String index, String type) {
+        //must 就像sql里的and
+        QueryBuilder qb = QueryBuilders.boolQuery().must(QueryBuilders.termQuery("account", "account7")).must(QueryBuilders.termQuery("username", "username7"));
+        SearchRequestBuilder sv = getClient().prepareSearch(index).setTypes(type).setQuery(qb).setFrom(0).setSize(10);
+        return sv;
+    }
+
+    public static SearchRequestBuilder queryDataForConditions(String index, String type) {
+        QueryBuilder qb1 = QueryBuilders.termQuery("account", "account5");
+        QueryBuilder qb2 = QueryBuilders.termQuery("account", "account6");
+
+        SortBuilder sortBuilder = SortBuilders.fieldSort("createtime");
+        sortBuilder.order(SortOrder.DESC);
+        //should 就像sql里的or
+        QueryBuilder s = QueryBuilders.boolQuery().should(qb1).should(qb2);
+        SearchRequestBuilder sv = getClient().prepareSearch(index).setTypes(type).setQuery(s).addSort(sortBuilder).setFrom(0).setSize(10);
+        return sv;
     }
 }

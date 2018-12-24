@@ -8,8 +8,8 @@ import lombok.Data;
  */
 @Data
 public class SoftwareInfoEs {
+    private String createtime;
     private String username;
     private String account;
-    private String createtime;
     private String sex;
 }
