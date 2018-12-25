@@ -1,11 +1,13 @@
 package com.xch.study.websocket;
 
+import com.alibaba.fastjson.JSONObject;
+import com.xch.study.utils.IpUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,10 +23,11 @@ public class SocketController {
 
     /**
      * view:(跳转到JSP界面).
+     *
      * @param map
      * @return
      */
-    @RequestMapping(value = {"/", "/"})
+    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String view(Map<String, Object> map) {
         map.put("name", "SpringBoot");
         map.put("date", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
@@ -33,9 +36,12 @@ public class SocketController {
 
     @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
     @ApiOperation(value = "消息发送", notes = "消息发送", httpMethod = "POST", response = Map.class)
-    public void sendMessage() {
+    public void sendMessage(HttpServletRequest request) {
         try {
-            WebSocket.sendInfo("测试数据");
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("ip", IpUtils.getIpAddr(request));
+            jsonObject.put("content", "内容");
+            WebSocket.sendInfo(JSONObject.toJSONString(jsonObject));
         } catch (IOException e) {
             e.printStackTrace();
         }

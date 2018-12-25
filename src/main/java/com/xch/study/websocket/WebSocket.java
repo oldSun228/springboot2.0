@@ -82,6 +82,7 @@ public class WebSocket {
 
 
     public void sendMessage(String message) throws IOException {
+        System.out.println("消息内容：》》》》》》》》》》》》》》》》》》》》》》》》》》" + message);
         this.session.getBasicRemote().sendText(message);
         //this.session.getAsyncRemote().sendText(message);
     }
