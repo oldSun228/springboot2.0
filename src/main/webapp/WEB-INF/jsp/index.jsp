@@ -25,6 +25,11 @@ Welcome<br/>
         alert('Not support websocket')
     }
 
+    //重新连接
+    function reconnect(){
+
+    }
+
     //连接发生错误的回调方法
     websocket.onerror = function () {
         setMessageInnerHTML("error");

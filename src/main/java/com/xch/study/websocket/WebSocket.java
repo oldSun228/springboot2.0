@@ -11,7 +11,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * @author fgs
  * @data 2018/12/25 9:53
  */
-@ServerEndpoint(value = "/websocket")
+@ServerEndpoint(value = "/websocket", encoders = {ServerEncoder.class})
 @Component
 public class WebSocket {
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
@@ -33,7 +33,9 @@ public class WebSocket {
         addOnlineCount();           //在线数加1
         System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
         try {
-            sendMessage("websocket已连接");
+            MessageEntity bean = new MessageEntity();
+            bean.setMsgContent("websocket已连接");
+            sendMessage(bean);
         } catch (IOException e) {
             System.out.println("IO异常");
         }
@@ -57,11 +59,13 @@ public class WebSocket {
     @OnMessage
     public void onMessage(String message, Session session) {
         System.out.println("来自客户端的消息:" + message);
-
+        MessageEntity bean = null;
         //群发消息
         for (WebSocket item : webSocketSet) {
             try {
-                item.sendMessage(message);
+                bean = new MessageEntity();
+                bean.setMsgContent(message);
+                item.sendMessage(bean);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -81,17 +85,19 @@ public class WebSocket {
     }
 
 
-    public void sendMessage(String message) throws IOException {
-        System.out.println("消息内容：》》》》》》》》》》》》》》》》》》》》》》》》》》" + message);
-        this.session.getBasicRemote().sendText(message);
-        //this.session.getAsyncRemote().sendText(message);
+    public void sendMessage(Object message) throws IOException {
+        try {
+            this.session.getBasicRemote().sendObject(message);
+        } catch (EncodeException e) {
+            e.printStackTrace();
+        }
     }
 
 
     /**
      * 群发自定义消息
      */
-    public static void sendInfo(String message) throws IOException {
+    public static void sendInfo(MessageEntity message) throws IOException {
         for (WebSocket item : webSocketSet) {
             try {
                 item.sendMessage(message);

@@ -1,6 +1,5 @@
 package com.xch.study.websocket;
 
-import com.alibaba.fastjson.JSONObject;
 import com.xch.study.utils.IpUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
@@ -38,10 +37,9 @@ public class SocketController {
     @ApiOperation(value = "消息发送", notes = "消息发送", httpMethod = "POST", response = Map.class)
     public void sendMessage(HttpServletRequest request) {
         try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("ip", IpUtils.getIpAddr(request));
-            jsonObject.put("content", "内容");
-            WebSocket.sendInfo(JSONObject.toJSONString(jsonObject));
+            MessageEntity bean = new MessageEntity();
+            bean.setInfoSourceIP(IpUtils.getIpAddr(request));
+            WebSocket.sendInfo(bean);
         } catch (IOException e) {
             e.printStackTrace();
         }
