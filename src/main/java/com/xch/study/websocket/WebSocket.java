@@ -22,7 +22,7 @@ public class WebSocket {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
-    private static CopyOnWriteArraySet<WebSocket> webSocketSet = new CopyOnWriteArraySet<>();
+//    private static CopyOnWriteArraySet<WebSocket> webSocketSet = new CopyOnWriteArraySet<>();
     /**
      * 在线人数
      */

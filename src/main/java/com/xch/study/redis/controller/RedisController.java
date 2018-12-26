@@ -34,7 +34,6 @@ public class RedisController {
         entity.setSex("sex");
         redisUtils.set("string1", entity);
         UsereEntity entity1 = (UsereEntity) redisUtils.get("string1");
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + entity1.getName());
 //        redisUtils.set("string1", "测试中国");
 //        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + redisUtils.get("string1"));
 
@@ -76,10 +75,6 @@ public class RedisController {
         redisUtils.lSet("list1", ls);
 
         List<UsereEntity> list = redisUtils.lGet("list1", 1, 10);
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(">>>>>>>>>>>>>>>>>>>" + list.get(i).getName());
-        }
-
         return list;
     }
 
