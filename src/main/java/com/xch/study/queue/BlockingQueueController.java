@@ -22,6 +22,7 @@ public class BlockingQueueController {
         // 消费苹果，从篮子中取走
         public String consume() throws InterruptedException {
             // get方法取出一个苹果，若basket为空，等到basket有苹果为止
+//            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + basket.element());
             String apple = basket.take();
             return apple;
         }
@@ -42,12 +43,10 @@ public class BlockingQueueController {
                 try {
                     while (true) {
                         // 生产苹果
-                        System.out.println("生产者准备生产苹果：" + System.currentTimeMillis());
                         basket.produce();
-                        System.out.println("生产者生产苹果完毕：" + System.currentTimeMillis());
                         System.out.println("生产完后有苹果：" + basket.getAppleNumber() + "个");
                         // 休眠300ms
-                        Thread.sleep(300);
+                        Thread.sleep(1000);
                     }
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
@@ -60,12 +59,11 @@ public class BlockingQueueController {
                 try {
                     while (true) {
                         // 消费苹果
-                        System.out.println("消费者准备消费苹果：" + System.currentTimeMillis());
-                        basket.consume();
-                        System.out.println("消费者消费苹果完毕：" + System.currentTimeMillis());
+                        String re = basket.consume();
+                        System.out.println(">>>>>>>>>>>>>>>>>>" + re);
                         System.out.println("消费完后有苹果：" + basket.getAppleNumber() + "个");
                         // 休眠1000ms
-                        Thread.sleep(1000);
+                        Thread.sleep(2000);
                     }
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
@@ -80,7 +78,7 @@ public class BlockingQueueController {
         service.submit(consumer);
         // 程序运行10s后，所有任务停止
         try {
-            Thread.sleep(10000);
+            Thread.sleep(6000);
         } catch (InterruptedException e) {
         }
         service.shutdownNow();

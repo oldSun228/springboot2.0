@@ -10,5 +10,7 @@ import java.util.Map;
 public interface Demo1Service {
     List<Map<String, Object>> querySinglTableCountForThread();
 
-    Map<String,Object> querySinglTableCount();
+    List<Map<String, Object>> querySinglTableCounts();
+
+    Map<String, Object> querySinglTableCount();
 }

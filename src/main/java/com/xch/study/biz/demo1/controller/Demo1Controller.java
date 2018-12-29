@@ -24,14 +24,30 @@ public class Demo1Controller {
     @RequestMapping(value = "/querySinglTableCountForThread", method = RequestMethod.POST)
     @ApiOperation(value = "", notes = "", httpMethod = "POST", response = Map.class)
     public List<Map<String, Object>> querySinglTableCountForThread() {
+        long startTime = System.currentTimeMillis();
         List<Map<String, Object>> result = demo1Service.querySinglTableCountForThread();
+        long endTime = System.currentTimeMillis();
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + (endTime - startTime));
+        return result;
+    }
+
+    @RequestMapping(value = "/querySinglTableCounts", method = RequestMethod.POST)
+    @ApiOperation(value = "", notes = "", httpMethod = "POST", response = Map.class)
+    public List<Map<String, Object>> querySinglTableCounts() {
+        long startTime = System.currentTimeMillis();
+        List<Map<String, Object>> result = demo1Service.querySinglTableCounts();
+        long endTime = System.currentTimeMillis();
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + (endTime - startTime));
         return result;
     }
 
     @RequestMapping(value = "/querySinglTableCount", method = RequestMethod.POST)
     @ApiOperation(value = "", notes = "", httpMethod = "POST", response = Map.class)
     public Map<String, Object> querySinglTableCount() {
+        long startTime = System.currentTimeMillis();
         Map<String, Object> result = demo1Service.querySinglTableCount();
+        long endTime = System.currentTimeMillis();
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + (endTime - startTime));
         return result;
     }
 
