@@ -5,9 +5,7 @@ server:
 spring:
   profiles:
     active: dev,redis,db,es
-  mvc:
-    view:
-      # 页面默认前缀目录
-      prefix: /WEB-INF/jsp/
-      # 响应页面默认后缀
-      suffix: .jsp
+#mybatis:
+#  configuration-properties: classpath:mybatis-config.xml
+#  mapper-locations: classpath:mapper/*.xml
+#  type-aliases-package: com.xch.study.biz.*.entity
