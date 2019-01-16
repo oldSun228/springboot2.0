@@ -79,6 +79,6 @@ public class KafkaCusumer extends Thread {
 
     public static void main(String[] args) {
         // 使用kafka集群中创建好的主题 test
-        new KafkaCusumer("ARF").start();
+        new KafkaCusumer("T1").start();
     }
 }

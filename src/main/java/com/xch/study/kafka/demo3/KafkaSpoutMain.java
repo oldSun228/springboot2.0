@@ -14,7 +14,7 @@ import storm.kafka.ZkHosts;
  */
 public class KafkaSpoutMain {
     // 主题与zk端口
-    public static final String TOPIC = "ARF";
+    public static final String TOPIC = "T1";
     public static final String ZKINFO = "127.0.0.1:2181";
 
     public static void main(String[] args) {

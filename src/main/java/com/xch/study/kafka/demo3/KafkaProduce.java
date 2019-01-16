@@ -1,14 +1,11 @@
 package com.xch.study.kafka.demo3;
 
+import com.alibaba.fastjson.JSONObject;
 import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
 
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author fgs
@@ -22,11 +19,31 @@ public class KafkaProduce extends Thread {
     final Random random = new Random();
 
     static {
-        map.put(0, "java");
-        map.put(1, "php");
-        map.put(2, "groovy");
-        map.put(3, "python");
-        map.put(4, "ruby");
+        JSONObject object = new JSONObject();
+        object.put("name", "姓名" + UUID.randomUUID());
+        object.put("age", "年龄" + UUID.randomUUID());
+        object.put("time", new Date().getTime());
+        map.put(0, JSONObject.toJSONString(object));
+        object = new JSONObject();
+        object.put("class", "班级" + UUID.randomUUID());
+        object.put("people", "人员" + UUID.randomUUID());
+        object.put("time", new Date().getTime());
+        map.put(1, JSONObject.toJSONString(object));
+        object = new JSONObject();
+        object.put("comply", "公司" + UUID.randomUUID());
+        object.put("area", "地址" + UUID.randomUUID());
+        object.put("time", new Date().getTime());
+        map.put(2, JSONObject.toJSONString(object));
+        object = new JSONObject();
+        object.put("bc", "班次" + UUID.randomUUID());
+        object.put("age", "年龄" + UUID.randomUUID());
+        object.put("time", new Date().getTime());
+        map.put(3, JSONObject.toJSONString(object));
+        object = new JSONObject();
+        object.put("hb", "航班" + UUID.randomUUID());
+        object.put("fj", "飞机" + UUID.randomUUID());
+        object.put("time", new Date().getTime());
+        map.put(4, JSONObject.toJSONString(object));
     }
 
     public KafkaProduce(String topic) {
@@ -56,10 +73,11 @@ public class KafkaProduce extends Thread {
         Producer producer = createProducer();
         //循环发送消息到kafka
         while (true) {
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>【生产消息：" + map.get(random.nextInt(5)));
             producer.send(new KeyedMessage<Integer, String>(topic, map.get(random.nextInt(5))));
             try {
                 //发送消息的时间间隔
-                Thread.sleep(200);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -69,7 +87,7 @@ public class KafkaProduce extends Thread {
 
     public static void main(String[] args) {
         // 使用kafka集群中创建好的主题 test
-        new KafkaProduce("ARF").start();
+        new KafkaProduce("T1").start();
     }
 
 }

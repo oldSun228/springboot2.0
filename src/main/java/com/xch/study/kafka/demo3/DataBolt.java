@@ -8,7 +8,6 @@ import backtype.storm.tuple.Tuple;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * @author fgs
@@ -26,13 +25,12 @@ public class DataBolt extends BaseRichBolt {
         i++;
         String[] datas = string.split(" ");
 
-        System.out.println("【收到消息：" + i + " 条数据】" + string);
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>【收到消息：" + i + " 条数据】" + string);
 
-        map.put("a", UUID.randomUUID() + "_" + string);
-        map.put("b", UUID.randomUUID() + "_" + string);
-        map.put("c", UUID.randomUUID() + "_" + string);
-        map.put("d", UUID.randomUUID() + "_" + string);
-
+//        map.put("a", UUID.randomUUID() + "_" + string);
+//        map.put("b", UUID.randomUUID() + "_" + string);
+//        map.put("c", UUID.randomUUID() + "_" + string);
+//        map.put("d", UUID.randomUUID() + "_" + string);
 //        jedis.hmset("test", map);
     }
 
