@@ -1,4 +1,4 @@
-package com.xch.study.kafka;
+package com.xch.study.kafka.demo1;
 
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
