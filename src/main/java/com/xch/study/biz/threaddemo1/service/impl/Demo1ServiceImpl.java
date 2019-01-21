@@ -1,8 +1,8 @@
-package com.xch.study.biz.demo1.service.impl;
+package com.xch.study.biz.threaddemo1.service.impl;
 
-import com.xch.study.biz.demo1.mapper.Demo1Mapper;
-import com.xch.study.biz.demo1.service.Demo1Service;
-import com.xch.study.biz.threadUtils.Demo1ForThread;
+import com.xch.study.biz.threaddemo1.mapper.Demo1Mapper;
+import com.xch.study.biz.threaddemo1.service.Demo1Service;
+import com.xch.study.biz.threaddemo1.threadUtils.Demo1ForThread;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.xch.study.biz.demo1.service;
+package com.xch.study.biz.threaddemo1.service;
 
 import java.util.List;
 import java.util.Map;

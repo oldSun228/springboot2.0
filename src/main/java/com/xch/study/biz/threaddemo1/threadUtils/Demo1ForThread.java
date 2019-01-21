@@ -1,7 +1,6 @@
-package com.xch.study.biz.threadUtils;
+package com.xch.study.biz.threaddemo1.threadUtils;
 
-import com.alibaba.fastjson.JSONObject;
-import com.xch.study.biz.demo1.service.Demo1Service;
+import com.xch.study.biz.threaddemo1.service.Demo1Service;
 
 import java.util.Map;
 import java.util.concurrent.Callable;

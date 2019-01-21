@@ -1,4 +1,4 @@
-package com.xch.study.biz.demo1.mapper;
+package com.xch.study.biz.threaddemo1.mapper;
 
 /**
  * @author fgs

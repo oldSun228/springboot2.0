@@ -1,6 +1,6 @@
-package com.xch.study.biz.demo1.controller;
+package com.xch.study.biz.threaddemo1.controller;
 
-import com.xch.study.biz.demo1.service.Demo1Service;
+import com.xch.study.biz.threaddemo1.service.Demo1Service;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
