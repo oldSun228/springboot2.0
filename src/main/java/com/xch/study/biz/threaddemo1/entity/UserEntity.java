@@ -1,4 +1,4 @@
-package com.xch.study.biz.entity;
+package com.xch.study.biz.threaddemo1.entity;
 
 import lombok.Data;
 

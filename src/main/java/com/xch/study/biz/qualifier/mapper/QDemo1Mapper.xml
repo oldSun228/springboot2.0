@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xch.study.biz.qualifier.mapper.QDemo1Mapper">
+    <select id="queryUserCount" resultType="java.lang.Integer">
+     SELECT count(F_CD) FROM T_USER
+    </select>
+
+    <select id="queryClassCount" resultType="java.lang.Integer">
+        SELECT count(F_CD) FROM T_CLASS
+    </select>
+</mapper>

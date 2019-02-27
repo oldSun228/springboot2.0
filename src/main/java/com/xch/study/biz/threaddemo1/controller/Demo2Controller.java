@@ -1,4 +1,4 @@
-package com.xch.study.biz.demo1.controller;
+package com.xch.study.biz.threaddemo1.controller;
 
 import org.dom4j.Document;
 import org.dom4j.io.SAXReader;

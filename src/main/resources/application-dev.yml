@@ -16,7 +16,7 @@ spring:
     encoding: utf-8
 mybatis:
   mapper-locations: classpath:mapping/*.xml
-  type-aliases-package: com.tydic.ck.model
+  type-aliases-package: com.xch.study.biz
 
 #pagehelper分页插件
 pagehelper:

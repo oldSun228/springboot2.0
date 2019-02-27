@@ -7,7 +7,7 @@ import java.util.Queue;
  * @author fgs
  * @data 2019/1/18 16:03
  */
-public class Demo1 {
+public class QueueDemo1 {
     public static void main(String[] args) {
         Queue<Character> qc = new LinkedList<>();
         for (char o : "fanguoshun".toCharArray()) {
