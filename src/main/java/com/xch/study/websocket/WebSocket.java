@@ -22,7 +22,7 @@ public class WebSocket {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
-//    private static CopyOnWriteArraySet<WebSocket> webSocketSet = new CopyOnWriteArraySet<>();
+    private static CopyOnWriteArraySet<WebSocket> webSocketSet = new CopyOnWriteArraySet<>();
     /**
      * 在线人数
      */
@@ -47,7 +47,7 @@ public class WebSocket {
      */
     @OnOpen
     public void onOpen(@PathParam("username") String username, Session session) {
-//        webSocketSet.add(this);
+        webSocketSet.add(this);
         onlineNumber++;
         logger.info("现在来连接的客户id：" + session.getId() + "用户名：" + username);
         this.username = username;
@@ -85,7 +85,7 @@ public class WebSocket {
      */
     @OnClose
     public void onClose() {
-//        webSocketSet.remove(this);
+        webSocketSet.remove(this);
         onlineNumber--;
         clients.remove(username);
         try {
@@ -144,7 +144,7 @@ public class WebSocket {
         }
     }
 
-    public void sendMessageAll(String message, String FromUserName) throws IOException {
+    public static void sendMessageAll(String message, String FromUserName) throws IOException {
         for (WebSocket item : clients.values()) {
             item.session.getAsyncRemote().sendText(message);
         }
