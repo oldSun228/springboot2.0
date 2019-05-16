@@ -1,9 +1,9 @@
 package com.xch.study.kafka.demo4.entity.serializer;
 
 import com.xch.study.kafka.demo4.entity.CustomerEntity;
-import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.Map;
 
@@ -12,45 +12,51 @@ import java.util.Map;
  * @data 2019/1/25 9:50
  */
 public class CustomerSerializer implements Serializer<CustomerEntity> {
-    @Override
-    public void configure(Map<String, ?> configsMap, boolean isKey) {
-        //不做任何配置
+    /**
+     * 用来配置当前类
+     * @param configs
+     * @param isKey
+     */
+    public void configure(Map<String, ?> configs, boolean isKey) {
     }
 
-    @Override
     /**
-     * Customer对象被序列化成：
-     * 表示customerIDflb4字节整数
-     * 表^customerName长度的4字节整数(如果customerName为空，则长度为0)
-     * 表示customerName的N个字节
+     * 用来执行序列化
+     * @param topic
+     * @param data
+     * @return
      */
     public byte[] serialize(String topic, CustomerEntity data) {
-        try {
-            byte[] serializedName;
-            int stringSize;
-            if (data == null) {
-                return null;
-            } else {
-                if (data.getName() != null) {
-                    serializedName = data.getName().getBytes("UTF-8");
-                    stringSize = serializedName.length;
-                } else {
-                    serializedName = new byte[0];
-                    stringSize = 0;
-                }
-            }
-            ByteBuffer buffer = ByteBuffer.allocate(4 + 4 + stringSize);
-            buffer.putInt(data.getId());
-            buffer.putInt(stringSize);
-            buffer.put(serializedName);
-            return buffer.array();
-        } catch (Exception e) {
-            throw new SerializationException("Error when serializing Customer to byte[] " + e);
+        if (data == null) {
+            return null;
         }
+        byte[] name, address;
+        try {
+            if (data.getName() != null) {
+                name = data.getName().getBytes("UTF-8");
+            } else {
+                name = new byte[0];
+            }
+            if (data.getAddress() != null) {
+                address = data.getAddress().getBytes("UTF-8");
+            } else {
+                address = new byte[0];
+            }
+            ByteBuffer buffer = ByteBuffer.allocate(4 + 4 + name.length + address.length);
+            buffer.putInt(name.length);
+            buffer.put(name);
+            buffer.putInt(address.length);
+            buffer.put(address);
+            return buffer.array();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return new byte[0];
     }
 
-    @Override
+    /**
+     * 用来关闭当前序列化器。一般情况下这个方法都是个空方法，如果实现了此方法，必须确保此方法的幂等性，因为这个方法很可能会被KafkaProducer调用多次
+     */
     public void close() {
-        //不需要关闭任何东西
     }
 }

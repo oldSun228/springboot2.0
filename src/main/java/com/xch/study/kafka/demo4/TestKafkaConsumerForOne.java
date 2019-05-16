@@ -9,16 +9,15 @@ import java.util.Properties;
 
 /**
  * @author fgs
- * @data 2019/1/23 17:02
- * 自动的提交消费进度
+ * @data 2019/4/11 15:44
  */
-public class TestKafkaConsumerForZD {
+public class TestKafkaConsumerForOne {
     public static void main(String[] args) {
         Properties props = new Properties();
         //用于初始化时建立链接到kafka集群，以host:port形式，多个以逗号分隔
         props.put("bootstrap.servers", "192.168.1.6:9092,192.168.1.5:9092,192.168.1.4:9092");
         //消费者的组id
-        props.put("group.id", "CountryCounter1");
+        props.put("group.id", "CountryCounter2");
         //用于配置是否自动的提交消费进度；
         props.put("enable.auto.commit", "true");
         //用于配置自动提交消费进度的时间；
@@ -32,12 +31,15 @@ public class TestKafkaConsumerForZD {
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
         //订阅主题列表topic
         consumer.subscribe(Arrays.asList("HelloWorld"));
-
-        while (true) {
-            ConsumerRecords<String, String> records = consumer.poll(1000);
-            for (ConsumerRecord<String, String> record : records)
-                System.out.printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>offset = %d, key = %s, value = %s", record.offset(), record.key(), record.value() + "\n");
+        try {
+            while (true) {
+                ConsumerRecords<String, String> records = consumer.poll(100);
+                for (ConsumerRecord<String, String> record : records) {
+                    System.out.println(">>>topic = " + record.topic() + ", partition = " + record.partition() + ", offset = " + record.offset() + ", customer = " + record.key() + ", value = " + record.value() + "\n");
+                }
+            }
+        } finally {
+            consumer.close();
         }
     }
-
 }

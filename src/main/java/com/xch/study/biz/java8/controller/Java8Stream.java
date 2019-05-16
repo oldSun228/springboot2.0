@@ -1,5 +1,7 @@
 package com.xch.study.biz.java8.controller;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +21,9 @@ public class Java8Stream {
 
         List<Integer> source = buildIntRange();
 
+        if(CollectionUtils.isNotEmpty(source)){
+
+        }
         // 传统方式的遍历
         long start = System.currentTimeMillis();
         for (int i = 0; i < source.size(); i++) {

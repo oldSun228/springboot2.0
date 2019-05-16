@@ -8,19 +8,6 @@ import lombok.Data;
  */
 @Data
 public class CustomerEntity {
-    private int customerId;
-    private String customerName;
-
-    public CustomerEntity(int id, String name) {
-        this.customerId = id;
-        this.customerName = name;
-    }
-
-    public int getId() {
-        return customerId;
-    }
-
-    public String getName() {
-        return customerName;
-    }
+    private String name;
+    private String address;
 }
