@@ -25,8 +25,9 @@ public class Demo2 {
         try {
             Process pro = Runtime.getRuntime().exec("ping " + ipAddress);
             BufferedReader buf = new BufferedReader(new InputStreamReader(pro.getInputStream(), "GBK"));
-            while ((line = buf.readLine()) != null)
+            while ((line = buf.readLine()) != null) {
                 System.out.println(line);
+            }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
