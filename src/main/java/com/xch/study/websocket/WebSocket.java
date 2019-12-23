@@ -154,4 +154,12 @@ public class WebSocket {
         return onlineNumber;
     }
 
+    public static void sendInfo(MessageEntity bean) {
+    }
+
+    public static void sendMessageAll(String s) {
+        for (WebSocket item : clients.values()) {
+            item.session.getAsyncRemote().sendText(s);
+        }
+    }
 }

@@ -14,7 +14,7 @@ public class StartQueue {
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
-//            e.printStackTrace();
+            e.printStackTrace();
         }
         service.shutdownNow();
     }

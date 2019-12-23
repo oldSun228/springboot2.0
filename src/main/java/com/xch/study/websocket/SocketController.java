@@ -1,5 +1,7 @@
 package com.xch.study.websocket;
 
+import com.alibaba.fastjson.JSONObject;
+import com.xch.study.utils.IpUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -34,13 +37,9 @@ public class SocketController {
     @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
     @ApiOperation(value = "消息发送", notes = "消息发送", httpMethod = "POST", response = Map.class)
     public void sendMessage(HttpServletRequest request) {
-//        try {
-//            MessageEntity bean = new MessageEntity();
-//            bean.setInfoSourceIP(IpUtils.getIpAddr(request));
-//            WebSocket.sendInfo(bean);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        MessageEntity bean = new MessageEntity();
+        bean.setInfoSourceIP(IpUtils.getIpAddr(request));
+        WebSocket.sendMessageAll(JSONObject.toJSONString(bean));
     }
 
 }
