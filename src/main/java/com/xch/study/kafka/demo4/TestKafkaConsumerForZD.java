@@ -35,8 +35,9 @@ public class TestKafkaConsumerForZD {
 
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(1000);
-            for (ConsumerRecord<String, String> record : records)
+            for (ConsumerRecord<String, String> record : records) {
                 System.out.printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>offset = %d, key = %s, value = %s", record.offset(), record.key(), record.value() + "\n");
+            }
         }
     }
 
