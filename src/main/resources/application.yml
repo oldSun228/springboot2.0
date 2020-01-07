@@ -1,11 +1,26 @@
 server:
   port: 18080
+  tomcat:
+    uri-encoding: UTF-8
   servlet:
     context-path: /study
 spring:
+  http:
+    encoding:
+      force: true
+      charset: utf-8
+      enabled: true
+    messages:
+      encoding: utf-8
   profiles:
-    active: dev,redis,db,es
-#mybatis:
-#  configuration-properties: classpath:mybatis-config.xml
-#  mapper-locations: classpath:mapper/*.xml
-#  type-aliases-package: com.xch.study.biz.*.entity
+    active: dev,db,redis
+#读取log配置文件
+logging:
+  config: classpath:logback-boot.xml
+
+#pagehelper分页插件
+pagehelper:
+  helperDialect: oracle
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

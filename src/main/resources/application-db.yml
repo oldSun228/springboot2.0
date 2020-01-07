@@ -1,21 +1,9 @@
-###Redis配置
-#spring:
-#  datasource:
-#    name: orcl
-#    url: jdbc:oracle://192.168.1.4:1521/orcl
-#    username: tydic01
-#    password: tydic01
-#    # 使用druid数据源
-#    type: com.alibaba.druid.pool.DruidDataSource
-#    driver-class-name: oracle.jdbc.driver.OracleDriver
-
-
 # 配置数据源
 spring:
   datasource:
-    username: tydic01
-    password: tydic01
-    url: jdbc:oracle:thin:@192.168.1.4:1521/orcl
+    url: jdbc:oracle:thin:@172.16.10.2:1521:orcl
+    username: jiaowei
+    password: 123456
     driver-class-name: oracle.jdbc.driver.OracleDriver
     # 数据源类型：Druid
     type: com.alibaba.druid.pool.DruidDataSource

@@ -21,14 +21,14 @@ public class ParamForConf {
      */
     private static final Logger lg = LoggerFactory.getLogger(ParamForConf.class);
 
-    @Value("${elasticsearch.clusterName}")
+//    @Value("${elasticsearch.clusterName}")
     private String clusterName;
-    @Value("${elasticsearch.ip}")
+//    @Value("${elasticsearch.ip}")
     private String ip;
-    @Value("${elasticsearch.port}")
+//    @Value("${elasticsearch.port}")
     private Integer port;
-    @Value("${elasticsearch.index}")
+//    @Value("${elasticsearch.index}")
     private String index;
-    @Value("${elasticsearch.type}")
+//    @Value("${elasticsearch.type}")
     private String type;
 }
