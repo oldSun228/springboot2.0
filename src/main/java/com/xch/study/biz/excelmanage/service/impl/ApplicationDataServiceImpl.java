@@ -66,7 +66,7 @@ public class ApplicationDataServiceImpl implements ApplicationDataService {
         if (CollectionUtils.isNotEmpty(readResult)) {
             for (int i = 0; i < readResult.size(); i++) {
                 //企业名称不为空的话
-                if (StringUtils.isNotEmpty(readResult.get(i).getLi20())) {
+                if (StringUtils.isNotEmpty(readResult.get(i).getLi20()) && isNotExist(readResult.get(i).getLi20())) {
                     table1Entity = new Table1Entity();
                     //企业ID
                     String qyId = CommonUtils.get32UUID();
@@ -109,27 +109,27 @@ public class ApplicationDataServiceImpl implements ApplicationDataService {
                     /**插入停车场基本信息表*/
                     table2Entity = new Table2Entity();
                     String tccjcxxId = CommonUtils.get32UUID();
-                    //                    停车场基础信息ID
+                    //停车场基础信息ID
                     table2Entity.setLi1(tccjcxxId);
-                    //                    企业ID
+                    //企业ID
                     table2Entity.setLi2(qyId);
-                    //                    备案证号
+                    //备案证号
                     table2Entity.setLi3(readResult.get(i).getLi2());
-                    //                    备案证期限
+                    //备案证期限
                     table2Entity.setLi4(readResult.get(i).getLi38());
-                    //                    ID
+                    //ID
                     table2Entity.setLi5(readResult.get(i).getLi30());
-                    //                    是否告知承诺:1是0否
+                    //是否告知承诺:1是0否
                     table2Entity.setLi6(0);
-                    //                    区属
+                    //区属
                     table2Entity.setLi7(readResult.get(i).getLi1());
-                    //                    数据状态（默认值0，0正常，1删除）
+                    //数据状态（默认值0，0正常，1删除）
                     table2Entity.setLi8(0);
-                    //                    创建日期
+                    //创建日期
                     table2Entity.setLi9(AutoDateFormateUtils.getCurTime("yyyy-MM-dd HH:mm:ss"));
-                    //                    创建人
+                    //创建人
                     table2Entity.setLi10("博坤");
-                    //                    场库类型  1其他停车场，2临时停车场
+                    //场库类型  1其他停车场，2临时停车场
                     if ("临时停车场".equals(readResult.get(i).getLi39())) {
                         table2Entity.setLi11("2");
                     } else {
@@ -141,127 +141,127 @@ public class ApplicationDataServiceImpl implements ApplicationDataService {
                     /****************************************************************************************/
                     /**插入停车场基本信息表*/
                     table3Entity = new Table3Entity();
-                    //                    停车场详细信息ID
+                    //停车场详细信息ID
                     String tccxxxxId = CommonUtils.get32UUID();
                     table3Entity.setLi1(tccxxxxId);
-                    //                    停车场基础信息ID
+                    //停车场基础信息ID
                     table3Entity.setLi2(tccjcxxId);
-                    //                    场库名称
+                    //场库名称
                     table3Entity.setLi3(readResult.get(i).getLi3());
-                    //                    从业人员数
+                    //从业人员数
                     table3Entity.setLi4(readResult.get(i).getLi7());
-                    //                    场库地址
+                    //场库地址
                     table3Entity.setLi5(readResult.get(i).getLi4());
-                    //                    场库区属
+                    //场库区属
                     table3Entity.setLi6(readResult.get(i).getLi16());
-                    //                    场库街道
+                    //场库街道
                     table3Entity.setLi7(readResult.get(i).getLi17());
-                    //                    总面积
+                    //总面积
                     table3Entity.setLi8(Integer.parseInt(readResult.get(i).getLi37()));
-                    //                    总泊位
+                    //总泊位
                     table3Entity.setLi9(Integer.parseInt(readResult.get(i).getLi33()));
-                    //                    换乘泊位
+                    //换乘泊位
                     table3Entity.setLi10(Integer.parseInt(readResult.get(i).getLi34()));
-                    //                    充电泊位
+                    //充电泊位
                     table3Entity.setLi11(Integer.parseInt(readResult.get(i).getLi35()));
-                    //                    无障碍泊位
+                    //无障碍泊位
                     table3Entity.setLi12(Integer.parseInt(readResult.get(i).getLi36()));
-                    //                    场库产权性质
+                    //场库产权性质
                     table3Entity.setLi13(readResult.get(i).getLi13());
-                    //                    租赁有效期
+                    //租赁有效期
                     table3Entity.setLi14(readResult.get(i).getLi15());
-                    //                    产权方名称
+                    //产权方名称
                     table3Entity.setLi15(readResult.get(i).getLi14());
-                    //                    负责人
+                    //负责人
                     table3Entity.setLi16(readResult.get(i).getLi5());
-                    //                    负责人电话
+                    //负责人电话
                     table3Entity.setLi17(readResult.get(i).getLi6());
-                    //                    收费供应商
+                    //收费供应商
                     table3Entity.setLi18(readResult.get(i).getLi19());
-                    //                    环线位置
+                    //环线位置
                     table3Entity.setLi19(readResult.get(i).getLi8());
-                    //                    经营性质(大类)
+                    //经营性质(大类)
                     table3Entity.setLi20("公共停车场");
-                    //                    场库类型
+                    //场库类型
                     table3Entity.setLi21(readResult.get(i).getLi39());
-                    //                    场库邮编
+                    //场库邮编
                     table3Entity.setLi22(readResult.get(i).getLi18());
-                    //                    服务电话
+                    //服务电话
                     table3Entity.setLi23(readResult.get(i).getLi11());
-                    //                    投诉电话
+                    //投诉电话
                     table3Entity.setLi24(readResult.get(i).getLi12());
-                    //                    数据状态（默认值0，0正常，1删除）
+                    //数据状态（默认值0，0正常，1删除）
                     table3Entity.setLi25(0);
-                    //                    创建日期
+                    //创建日期
                     table3Entity.setLi26(AutoDateFormateUtils.getCurTime("yyyy-MM-dd HH:mm:ss"));
-                    //                    创建人
+                    //创建人
                     table3Entity.setLi27("博坤");
-                    //                    区县ID
+                    //区县ID
                     table3Entity.setLi28(getAreaId(readResult.get(i).getLi16()));
                     /**先查看数据库是否存在 不存在插入 */
                     applicationDataMapper.mergeIntoTable3Data(table3Entity);
                     /****************************************************************************************/
                     /**插入停车场基本信息表*/
                     table4Entity = new Table4Entity();
-                    //                    停车场场库信息ID
+                    //停车场场库信息ID
                     String tccckxxId = CommonUtils.get32UUID();
                     table4Entity.setLi1(tccckxxId);
-                    //                    停车场基础信息ID
+                    //停车场基础信息ID
                     table4Entity.setLi2(tccjcxxId);
-                    //                    库类型
+                    //库类型
                     table4Entity.setLi3(readResult.get(i).getLi40());
-                    //                    库级别
+                    //库级别
                     table4Entity.setLi4(readResult.get(i).getLi47());
-                    //                    库等别
+                    //库等别
                     table4Entity.setLi5(readResult.get(i).getLi48());
-                    //                    库面积
+                    //库面积
                     table4Entity.setLi6(Integer.parseInt(readResult.get(i).getLi42()));
-                    //                    库泊位
+                    //库泊位
                     table4Entity.setLi7(Integer.parseInt(readResult.get(i).getLi43()));
-                    //                    大车泊位
+                    //大车泊位
                     table4Entity.setLi8(Integer.parseInt(readResult.get(i).getLi44()));
-                    //                    小车泊位
+                    //小车泊位
                     table4Entity.setLi9(Integer.parseInt(readResult.get(i).getLi45()));
-                    //                    计费标准，计费类型1-元/小时2-其他
+                    //计费标准，计费类型1-元/小时2-其他
                     Integer val = readResult.get(i).getLi46().split(";").length == 1 ? 1 : 2;
                     table4Entity.setLi10(val);
-                    //                    计费标准
+                    //计费标准
                     if (val == 1) {
                         table4Entity.setLi11(null);
                     } else {
                         table4Entity.setLi11(readResult.get(i).getLi46());
                     }
-                    //                    计费标准(大型车)
+                    //计费标准(大型车)
                     table4Entity.setLi12(null);
-                    //                    计费标准(特大型车)
+                    //计费标准(特大型车)
                     table4Entity.setLi13(null);
-                    //                    计费标准(特种车)
+                    //计费标准(特种车)
                     table4Entity.setLi14(null);
-                    //                    自行式泊位数
+                    //自行式泊位数
                     table4Entity.setLi15(Integer.parseInt(readResult.get(i).getLi49()));
-                    //                    子母式泊位
+                    //子母式泊位
                     table4Entity.setLi16(Integer.parseInt(readResult.get(i).getLi51()));
-                    //                    机械式泊位
+                    //机械式泊位
                     table4Entity.setLi17(Integer.parseInt(readResult.get(i).getLi50()));
-                    //                    机械架有效期
+                    //机械架有效期
                     table4Entity.setLi18(readResult.get(i).getLi52());
-                    //                    计费方式
+                    //计费方式
                     table4Entity.setLi19(readResult.get(i).getLi55());
-                    //                    对外开放泊位
+                    //对外开放泊位
                     table4Entity.setLi20(Integer.parseInt(readResult.get(i).getLi53()));
-                    //                    服务时间备注
+                    //服务时间备注
                     table4Entity.setLi21(readResult.get(i).getLi10());
-                    //                    长包泊位
+                    //长包泊位
                     table4Entity.setLi22(readResult.get(i).getLi54());
-                    //                    付费方式
+                    //付费方式
                     table4Entity.setLi23(readResult.get(i).getLi56());
-                    //                    数据状态（默认值0，0正常，1删除）
+                    //数据状态（默认值0，0正常，1删除）
                     table4Entity.setLi24(0);
-                    //                    创建日期
+                    //创建日期
                     table4Entity.setLi25(AutoDateFormateUtils.getCurTime("yyyy-MM-dd HH:mm:ss"));
-                    //                    创建人
+                    //创建人
                     table4Entity.setLi26("博坤");
-                    //                    服务时间 1全年全天2阶段性全天3全年时间4阶段性时段性
+                    //服务时间 1全年全天2阶段性全天3全年时间4阶段性时段性
                     if ("全年全天".equals(readResult.get(i).getLi9())) {
                         table4Entity.setLi27("1");
                     } else if ("阶段性全天".equals(readResult.get(i).getLi9())) {
@@ -272,7 +272,7 @@ public class ApplicationDataServiceImpl implements ApplicationDataService {
                         table4Entity.setLi27("4");
                     }
 
-                    //                    层数
+                    //层数
                     table4Entity.setLi28(readResult.get(i).getLi41());
                     /**先查看数据库是否存在 不存在插入 */
                     applicationDataMapper.insertIntoTable4Data(table4Entity);
@@ -280,52 +280,52 @@ public class ApplicationDataServiceImpl implements ApplicationDataService {
                     /**插入停车场基本信息表*/
                     for (int j = 0; j < 2; j++) {
                         table5Entity = new Table5Entity();
-                        //                    停车场进出口ID
+                        //停车场进出口ID
                         String tccjckId = CommonUtils.get32UUID();
                         table5Entity.setLi1(tccjckId);
-                        //                    停车场基础信息ID
+                        //停车场基础信息ID
                         table5Entity.setLi2(tccjcxxId);
                         if (j == 0) {
-                            //                    进出口地址
-                            table5Entity.setLi3(readResult.get(j).getLi31());
-                            //                    进出类型
+                            //进出口地址
+                            table5Entity.setLi3(readResult.get(i).getLi31());
+                            //进出类型
                             table5Entity.setLi4(1);
                         } else {
-                            //                    进出口地址
-                            table5Entity.setLi3(readResult.get(j).getLi32());
-                            //                    进出类型
+                            //进出口地址
+                            table5Entity.setLi3(readResult.get(i).getLi32());
+                            //进出类型
                             table5Entity.setLi4(2);
                         }
 
-                        //                    数据状态（默认值0，0正常，1删除）
+                        //数据状态（默认值0，0正常，1删除）
                         table5Entity.setLi5(0);
-                        //                    创建日期
+                        //创建日期
                         table5Entity.setLi6(AutoDateFormateUtils.getCurTime("yyyy-MM-dd HH:mm:ss"));
-                        //                    创建人
+                        //创建人
                         table5Entity.setLi7("博坤");
                         /**先查看数据库是否存在 不存在插入 */
                         applicationDataMapper.insertIntoTable5Data(table5Entity);
                     }
                     /****************************************************************************************/
                     table6Entity = new Table6Entity();
-                    //                    停车场数据状态主键ID
+                    //停车场数据状态主键ID
                     String tccsjztId = CommonUtils.get32UUID();
                     table6Entity.setLi1(tccsjztId);
-                    //                    停车场基础信息ID
+                    //停车场基础信息ID
                     table6Entity.setLi2(tccjcxxId);
-                    //                    申请数据状态状态（0：新办，1：场库更新，2：企业更新，3：注销，4：补正，5：换证 6:承诺未遵守撤销）
+                    //申请数据状态状态（0：新办，1：场库更新，2：企业更新，3：注销，4：补正，5：换证 6:承诺未遵守撤销）
                     table6Entity.setLi3(1);
-                    //                    区属
+                    //区属
                     table6Entity.setLi4(readResult.get(i).getLi1());
-                    //                    备案证号
+                    //备案证号
                     table6Entity.setLi5(readResult.get(i).getLi2());
-                    //                    备案期限
+                    //备案期限
                     table6Entity.setLi6(readResult.get(i).getLi38());
-                    //                    数据状态（默认值0，0正常，1删除）
+                    //数据状态（默认值0，0正常，1删除）
                     table6Entity.setLi7(0);
-                    //                    创建日期
+                    //创建日期
                     table6Entity.setLi8(AutoDateFormateUtils.getCurTime("yyyy-MM-dd HH:mm:ss"));
-                    //                    创建人
+                    //创建人
                     table6Entity.setLi9("博坤");
                     /**先查看数据库是否存在 不存在插入 */
                     applicationDataMapper.mergeIntoTable6Data(table6Entity);
@@ -335,6 +335,15 @@ public class ApplicationDataServiceImpl implements ApplicationDataService {
 
         System.out.println(">>>>>>>>END>>>>>>>>");
 
+    }
+
+    private boolean isNotExist(String name) {
+        boolean result = true;
+        List<Table1Entity> resultList = applicationDataMapper.checkNameIsNotExist(name);
+        if (resultList.size() > 0) {
+            return result = false;
+        }
+        return result;
     }
 
 
@@ -361,7 +370,7 @@ public class ApplicationDataServiceImpl implements ApplicationDataService {
         Iterator<Map.Entry<String, String>> iterator = dataMap.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<String, String> next = iterator.next();
-            if (next.getKey().indexOf(name) > -1) {
+            if (name.indexOf(next.getKey()) > -1) {
                 result = next.getValue();
                 break;
             }

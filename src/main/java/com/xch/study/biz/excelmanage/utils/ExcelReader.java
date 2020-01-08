@@ -123,7 +123,7 @@ public class ExcelReader {
             }
 
             // 解析每一行的数据，构造数据对象
-            int rowStart = firstRowNum + 1;
+            int rowStart = firstRowNum + 2;
             int rowEnd = sheet.getPhysicalNumberOfRows();
             for (int rowNum = rowStart; rowNum < rowEnd; rowNum++) {
                 Row row = sheet.getRow(rowNum);

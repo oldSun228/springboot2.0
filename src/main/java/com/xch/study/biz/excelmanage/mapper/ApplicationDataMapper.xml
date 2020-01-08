@@ -5,6 +5,10 @@
         SELECT CL_NM li1 FROM comm_conf_dat
     </select>
 
+    <select id="checkNameIsNotExist" parameterType="java.util.HashMap" resultType="com.xch.study.biz.excelmanage.entity.ExcelDataEntity">
+        SELECT ENTERPRISE_NAME li1 FROM TOBJ_CK_ENTERPRISE_INFO_BAK where ENTERPRISE_NAME = #{name}
+    </select>
+
     <update id="mergeIntoTable1Data" parameterType="com.xch.study.biz.excelmanage.entity.Table1Entity">
         MERGE INTO TOBJ_CK_ENTERPRISE_INFO_BAK T1
         USING(SELECT COUNT(1) total FROM TOBJ_CK_ENTERPRISE_INFO_BAK T2 WHERE T2.ENTERPRISE_NAME = #{li3}) T3 ON (T3.total > 0)
@@ -47,10 +51,10 @@
             <if test="li12 != null and  li12 != ''">
                 ENTERPRISE_POSTAL_CODE,
             </if>
-            <if test="li13 != null and  li13 != ''">
+            <if test="li13 != null">
                 ISFIRST,
             </if>
-            <if test="li14 != null and  li14 != ''">
+            <if test="li14 != null">
                 DATA_STATE,
             </if>
             <if test="li15 != null and  li15 != ''">
@@ -97,10 +101,10 @@
             <if test="li12 != null and  li12 != ''">
                 #{li12},
             </if>
-            <if test="li13 != null and  li13 != ''">
+            <if test="li13 != null">
                 #{li13},
             </if>
-            <if test="li14 != null and  li14 != ''">
+            <if test="li14 != null">
                 #{li14},
             </if>
             <if test="li15 != null and  li15 != ''">
@@ -114,7 +118,7 @@
 
     <update id="mergeIntoTable2Data" parameterType="com.xch.study.biz.excelmanage.entity.Table2Entity">
         MERGE INTO TOBJ_CK_BASE_BASIC_INFO_BAK T1
-        USING(SELECT COUNT(1) total FROM TOBJ_CK_BASE_BASIC_INFO_BAK T2 WHERE T2.ENTERPRISE_ID = #{li2} and T2.RECORD_NUMBER = #{li3}) T3 ON (T3.total > 0)
+        USING(SELECT COUNT(1) total FROM TOBJ_CK_BASE_BASIC_INFO_BAK T2 WHERE T2.RECORD_NUMBER = #{li3}) T3 ON (T3.total > 0)
         WHEN NOT MATCHED THEN
         INSERT
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -133,13 +137,13 @@
             <if test="li5 != null and  li5 != ''">
                 CERTIFICATION_NUMBER,
             </if>
-            <if test="li6 != null and  li6 != ''">
+            <if test="li6 != null">
                 ISINFORMPROMISE,
             </if>
             <if test="li7 != null and  li7 != ''">
                 APPROVE_DISTRICT,
             </if>
-            <if test="li8 != null and  li8 != ''">
+            <if test="li8 != null">
                 DATA_STATE,
             </if>
             <if test="li9 != null and  li9 != ''">
@@ -168,13 +172,13 @@
             <if test="li5 != null and  li5 != ''">
                 #{li5},
             </if>
-            <if test="li6 != null and  li6 != ''">
+            <if test="li6 != null">
                 #{li6},
             </if>
             <if test="li7 != null and  li7 != ''">
                 #{li7},
             </if>
-            <if test="li8 != null and  li8 != ''">
+            <if test="li8 != null">
                 #{li8},
             </if>
             <if test="li9 != null and  li9 != ''">
@@ -216,19 +220,19 @@
             <if test="li7 != null and  li7 != ''">
                 CK_ADDRESS_STREET,
             </if>
-            <if test="li8 != null and  li8 != ''">
+            <if test="li8 != null">
                 CK_AREA,
             </if>
-            <if test="li9 != null and  li9 != ''">
+            <if test="li9 != null">
                 BERTHS_NUMBER,
             </if>
-            <if test="li10 != null and  li10 != ''">
+            <if test="li10 != null">
                 BERTHS_NUMBER_PR,
             </if>
-            <if test="li11 != null and  li11 != ''">
+            <if test="li11 != null">
                 BERTHS_NUMBER_CHARGING_PILE,
             </if>
-            <if test="li12 != null and  li12 != ''">
+            <if test="li12 != null">
                 BERTHS_NUMBER_BARRIER_FREE,
             </if>
             <if test="li13 != null and  li13 != ''">
@@ -267,7 +271,7 @@
             <if test="li24 != null and  li24 != ''">
                 COMPLAINT_TEL,
             </if>
-            <if test="li25 != null and  li25 != ''">
+            <if test="li25 != null">
                 DATA_STATE,
             </if>
             <if test="li26 != null and  li26 != ''">
@@ -302,19 +306,19 @@
             <if test="li7 != null and  li7 != ''">
                 #{li7},
             </if>
-            <if test="li8 != null and  li8 != ''">
+            <if test="li8 != null">
                 #{li8},
             </if>
-            <if test="li9 != null and  li9 != ''">
+            <if test="li9 != null">
                 #{li9},
             </if>
-            <if test="li10 != null and  li10 != ''">
+            <if test="li10 != null">
                 #{li10},
             </if>
-            <if test="li11 != null and  li11 != ''">
+            <if test="li11 != null">
                 #{li11},
             </if>
-            <if test="li12 != null and  li12 != ''">
+            <if test="li12 != null">
                 #{li12},
             </if>
             <if test="li13 != null and  li13 != ''">
@@ -353,7 +357,7 @@
             <if test="li24 != null and  li24 != ''">
                 #{li24},
             </if>
-            <if test="li25 != null and  li25 != ''">
+            <if test="li25 != null">
                 #{li25},
             </if>
             <if test="li26 != null and  li26 != ''">
@@ -386,19 +390,19 @@
             <if test="li5 != null and  li5 != ''">
                 GRADE,
             </if>
-            <if test="li6 != null and  li6 != ''">
+            <if test="li6 != null">
                 AREA,
             </if>
-            <if test="li7 != null and  li7 != ''">
+            <if test="li7 != null">
                 PARKING_NUMBER,
             </if>
-            <if test="li8 != null and  li8 != ''">
+            <if test="li8 != null">
                 PARKING_NUMBER_LARGE,
             </if>
-            <if test="li9 != null and  li9 != ''">
+            <if test="li9 != null">
                 PARKING_NUMBER_SMALL,
             </if>
-            <if test="li10 != null and  li10 != ''">
+            <if test="li10 != null">
                 FREIGHT_BASIS_TYPE,
             </if>
             <if test="li11 != null and  li11 != ''">
@@ -413,22 +417,22 @@
             <if test="li14 != null and  li14 != ''">
                 FREIGHT_BASIS_SPECIAL,
             </if>
-            <if test="li15 != null and  li15 != ''">
+            <if test="li15 != null">
                 Z_SELF_PROPELLED,
             </if>
-            <if test="li16 != null and  li16 != ''">
+            <if test="li16 != null">
                 OFFSPRING_TYPE,
             </if>
-            <if test="li17 != null and  li17 != ''">
+            <if test="li17 != null">
                 MECHANICAL,
             </if>
-            <if test="li18 != null and  li18 != ''">
+            <if test="li18 != null">
                 SHELF_VALIDITY_PERIOD,
             </if>
             <if test="li19 != null and  li19 != ''">
                 BILLING_MODE,
             </if>
-            <if test="li20 != null and  li20 != ''">
+            <if test="li20 != null">
                 PARKING_NUMBER_FOREIGN,
             </if>
             <if test="li21 != null and  li21 != ''">
@@ -440,7 +444,7 @@
             <if test="li23 != null and  li23 != ''">
                 PAYMENT_METHOD,
             </if>
-            <if test="li24 != null and  li24 != ''">
+            <if test="li24 != null">
                 DATA_STATE,
             </if>
             <if test="li25 != null and  li25 != ''">
@@ -472,19 +476,19 @@
             <if test="li5 != null and  li5 != ''">
                 #{li5},
             </if>
-            <if test="li6 != null and  li6 != ''">
+            <if test="li6 != null">
                 #{li6},
             </if>
-            <if test="li7 != null and  li7 != ''">
+            <if test="li7 != null">
                 #{li7},
             </if>
-            <if test="li8 != null and  li8 != ''">
+            <if test="li8 != null">
                 #{li8},
             </if>
-            <if test="li9 != null and  li9 != ''">
+            <if test="li9 != null">
                 #{li9},
             </if>
-            <if test="li10 != null and  li10 != ''">
+            <if test="li10 != null">
                 #{li10},
             </if>
             <if test="li11 != null and  li11 != ''">
@@ -499,22 +503,22 @@
             <if test="li14 != null and  li14 != ''">
                 #{li14},
             </if>
-            <if test="li15 != null and  li15 != ''">
+            <if test="li15 != null">
                 #{li15},
             </if>
-            <if test="li16 != null and  li16 != ''">
+            <if test="li16 != null">
                 #{li16},
             </if>
-            <if test="li17 != null and  li17 != ''">
+            <if test="li17 != null">
                 #{li17},
             </if>
-            <if test="li18 != null and  li18 != ''">
+            <if test="li18 != null">
                 #{li18},
             </if>
             <if test="li19 != null and  li19 != ''">
                 #{li19},
             </if>
-            <if test="li20 != null and  li20 != ''">
+            <if test="li20 != null">
                 #{li20},
             </if>
             <if test="li21 != null and  li21 != ''">
@@ -526,7 +530,7 @@
             <if test="li23 != null and  li23 != ''">
                 #{li23},
             </if>
-            <if test="li24 != null and  li24 != ''">
+            <if test="li24 != null">
                 #{li24},
             </if>
             <if test="li25 != null and  li25 != ''">
@@ -556,10 +560,10 @@
             <if test="li3 != null and  li3 != ''">
                 ENTRANCEEXIT_NAME,
             </if>
-            <if test="li4 != null and  li4 != ''">
+            <if test="li4 != null">
                 ENTRANCEEXIT_TYPE,
             </if>
-            <if test="li5 != null and  li5 != ''">
+            <if test="li5 != null">
                 DATA_STATE,
             </if>
             <if test="li6 != null and  li6 != ''">
@@ -579,10 +583,10 @@
             <if test="li3 != null and  li3 != ''">
                 #{li3},
             </if>
-            <if test="li4 != null and  li4 != ''">
+            <if test="li4 != null">
                 #{li4},
             </if>
-            <if test="li5 != null and  li5 != ''">
+            <if test="li5 != null">
                 #{li5},
             </if>
             <if test="li6 != null and  li6 != ''">
@@ -606,7 +610,7 @@
             <if test="li2 != null and  li2 != ''">
                 CK_BASE_ID,
             </if>
-            <if test="li3 != null and  li3 != ''">
+            <if test="li3 != null">
                 APPLAY_DATA_STATUS,
             </if>
             <if test="li4 != null and  li4 != ''">
@@ -618,7 +622,7 @@
             <if test="li6 != null and  li6 != ''">
                 RECORD_TERM,
             </if>
-            <if test="li7 != null and  li7 != ''">
+            <if test="li7 != null">
                 DATA_STATE,
             </if>
             <if test="li8 != null and  li8 != ''">
@@ -635,7 +639,7 @@
             <if test="li2 != null and  li2 != ''">
                 #{li2},
             </if>
-            <if test="li3 != null and  li3 != ''">
+            <if test="li3 != null">
                 #{li3},
             </if>
             <if test="li4 != null and  li4 != ''">
@@ -647,7 +651,7 @@
             <if test="li6 != null and  li6 != ''">
                 #{li6},
             </if>
-            <if test="li7 != null and  li7 != ''">
+            <if test="li7 != null">
                 #{li7},
             </if>
             <if test="li8 != null and  li8 != ''">

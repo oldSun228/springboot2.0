@@ -32,4 +32,6 @@ public interface ApplicationDataMapper {
     void insertIntoTable5Data(Table5Entity table5Entity);
 
     void mergeIntoTable6Data(Table6Entity table6Entity);
+
+    List<Table1Entity> checkNameIsNotExist(String name);
 }
