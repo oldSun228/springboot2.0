@@ -1,7 +1,7 @@
 package com.xch.study.biz.excelmanage.mapper;
 
 
-import com.xch.study.biz.excelmanage.entity.ExcelDataEntity;
+import com.xch.study.biz.excelmanage.entity.*;
 
 import java.util.List;
 
@@ -20,4 +20,16 @@ public interface ApplicationDataMapper {
      * @Param []
      **/
     List<ExcelDataEntity> queryData();
+
+    void mergeIntoTable1Data(Table1Entity table1Entity);
+
+    void mergeIntoTable2Data(Table2Entity table2Entity);
+
+    void mergeIntoTable3Data(Table3Entity table3Entity);
+
+    void insertIntoTable4Data(Table4Entity table4Entity);
+
+    void insertIntoTable5Data(Table5Entity table5Entity);
+
+    void mergeIntoTable6Data(Table6Entity table6Entity);
 }

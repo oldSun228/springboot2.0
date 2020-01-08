@@ -1,6 +1,7 @@
 package com.xch.study.biz.excelmanage.utils;
 
 import com.xch.study.biz.excelmanage.entity.ExcelDataEntity;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -12,8 +13,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -152,12 +156,16 @@ public class ExcelReader {
         }
         String returnValue = null;
         switch (cell.getCellType()) {
-            case NUMERIC: //数字
-                Double doubleValue = cell.getNumericCellValue();
-
-                // 格式化科学计数法，取一位整数
-                DecimalFormat df = new DecimalFormat("0");
-                returnValue = df.format(doubleValue);
+            case NUMERIC: //数字 日期
+                DecimalFormat df = new DecimalFormat("#");
+                // like12 add,20180622,支持日期格式
+                if (HSSFDateUtil.isCellDateFormatted(cell)) {
+                    Date d = cell.getDateCellValue();
+                    DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");// HH:mm:ss
+                    returnValue = df2.format(d);
+                } else {// 数字
+                    returnValue = df.format(cell.getNumericCellValue()).toString();
+                }
                 break;
             case STRING: //字符串
                 returnValue = cell.getStringCellValue();
@@ -191,43 +199,43 @@ public class ExcelReader {
         ExcelDataEntity resultData = new ExcelDataEntity();
         Cell cell;
         int cellNum = 0;
-        
+
         cell = row.getCell(cellNum++);
         String li1 = convertCellValueToString(cell);
         resultData.setLi1(li1);
-        
+
         cell = row.getCell(cellNum++);
         String li2 = convertCellValueToString(cell);
         resultData.setLi2(li2);
-        
+
         cell = row.getCell(cellNum++);
         String li3 = convertCellValueToString(cell);
         resultData.setLi3(li3);
-        
+
         cell = row.getCell(cellNum++);
         String li4 = convertCellValueToString(cell);
         resultData.setLi4(li4);
-        
+
         cell = row.getCell(cellNum++);
         String li5 = convertCellValueToString(cell);
         resultData.setLi5(li5);
-        
+
         cell = row.getCell(cellNum++);
         String li6 = convertCellValueToString(cell);
         resultData.setLi6(li6);
-        
+
         cell = row.getCell(cellNum++);
         String li7 = convertCellValueToString(cell);
         resultData.setLi7(li7);
-        
+
         cell = row.getCell(cellNum++);
         String li8 = convertCellValueToString(cell);
         resultData.setLi8(li8);
-        
+
         cell = row.getCell(cellNum++);
         String li9 = convertCellValueToString(cell);
         resultData.setLi9(li9);
-        
+
         cell = row.getCell(cellNum++);
         String li10 = convertCellValueToString(cell);
         resultData.setLi10(li10);
