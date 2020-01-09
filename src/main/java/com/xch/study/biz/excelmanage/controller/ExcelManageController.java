@@ -1,6 +1,5 @@
 package com.xch.study.biz.excelmanage.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.xch.study.biz.excelmanage.entity.ExcelDataEntity;
 import com.xch.study.biz.excelmanage.service.ApplicationDataService;
 import com.xch.study.biz.excelmanage.utils.ExcelReader;
@@ -9,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author fgs
@@ -26,7 +27,12 @@ public class ExcelManageController {
         String excelFileName = "C:\\Users\\86158\\Desktop\\abc.xlsx";
         // 读取Excel文件内容
         List<ExcelDataEntity> readResult = ExcelReader.readExcel(excelFileName);
-        System.out.println(JSONObject.toJSONString(readResult));
+        Map<String, String> result = new HashMap<>();
+        readResult.stream().forEachOrdered(o -> {
+            result.put(o.getLi20(), o.getLi20());
+        });
+
+        System.out.println(">>>>>>>>>>>" + result.size());
     }
 
     @Autowired
@@ -41,17 +47,17 @@ public class ExcelManageController {
      **/
     @RequestMapping(value = "queryData", method = RequestMethod.POST)
     public List<ExcelDataEntity> queryData() throws Exception {
-        List<ExcelDataEntity> listData=applicationDataService.queryData();
+        List<ExcelDataEntity> listData = applicationDataService.queryData();
         return listData;
     }
 
 
     /**
+     * @return void
      * @Author fgs
      * @Description 数据导入
      * @Date 10:32 2020/1/7
      * @Param []
-     * @return void
      **/
     @RequestMapping(value = "saveData", method = RequestMethod.POST)
     public void saveData() throws Exception {
