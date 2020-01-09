@@ -39,5 +39,6 @@ public class Table4Entity {
     private String li26;
     private String li27;
     private String li28;
+    private String li29;
 
 }

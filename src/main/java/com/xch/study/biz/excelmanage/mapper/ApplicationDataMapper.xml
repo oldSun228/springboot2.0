@@ -372,8 +372,11 @@
         </trim>
     </update>
 
-    <insert id="insertIntoTable4Data" parameterType="com.xch.study.biz.excelmanage.entity.Table4Entity">
-        INSERT INTO TOBJ_CK_BASE_GARAGE_INFO_BAK
+    <update id="insertIntoTable4Data" parameterType="com.xch.study.biz.excelmanage.entity.Table4Entity">
+        MERGE INTO TOBJ_CK_BASE_GARAGE_INFO_BAK T1
+        USING(SELECT COUNT(1) total FROM TOBJ_CK_BASE_GARAGE_INFO_BAK T2 WHERE T2.RECORD_NUMBER = #{li29}) T3 ON (T3.total > 0)
+        WHEN NOT MATCHED THEN
+        INSERT
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="li1 != null and  li1 != ''">
                 ID,
@@ -458,6 +461,9 @@
             </if>
             <if test="li28 != null and  li28 != ''">
                 NATURE_FLOOR_NUMBER,
+            </if>
+            <if test="li29 != null and  li29 != ''">
+                RECORD_NUMBER,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -545,11 +551,17 @@
             <if test="li28 != null and  li28 != ''">
                 #{li28},
             </if>
+            <if test="li29 != null and  li29 != ''">
+                #{li29},
+            </if>
         </trim>
-    </insert>
+    </update>
 
     <insert id="insertIntoTable5Data" parameterType="com.xch.study.biz.excelmanage.entity.Table5Entity">
-        INSERT INTO TOB_CK_BASE_EXIT_INFO_BAK
+        MERGE INTO TOB_CK_BASE_EXIT_INFO_BAK T1
+        USING(SELECT COUNT(1) total FROM TOB_CK_BASE_EXIT_INFO_BAK T2 WHERE T2.ENTRANCEEXIT_NAME = #{li3,jdbcType=VARCHAR} and T2.ENTRANCEEXIT_TYPE = #{li4,jdbcType=DECIMAL}) T3 ON (T3.total > 0)
+        WHEN NOT MATCHED THEN
+        INSERT
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="li1 != null and  li1 != ''">
                 ID,
@@ -600,7 +612,7 @@
 
     <update id="mergeIntoTable6Data" parameterType="com.xch.study.biz.excelmanage.entity.Table6Entity">
         MERGE INTO TOBJ_CK_DATASTATUS_INFO_BAK T1
-        USING(SELECT COUNT(1) total FROM TOBJ_CK_DATASTATUS_INFO_BAK T2 WHERE T2.CK_BASE_ID = #{li2} and T2.RECORD_NUMBER = #{li5}) T3 ON (T3.total > 0)
+        USING(SELECT COUNT(1) total FROM TOBJ_CK_DATASTATUS_INFO_BAK T2 WHERE T2.RECORD_NUMBER = #{li5}) T3 ON (T3.total > 0)
         WHEN NOT MATCHED THEN
         INSERT
         <trim prefix="(" suffix=")" suffixOverrides=",">
